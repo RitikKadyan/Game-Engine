@@ -85,8 +85,6 @@ class Scene:
                             self.keepGoing = False
                         elif event.key == pygame.K_p:
                             self.pause(2)
-                        elif event.key == pygame.K_c:
-                            self.clear()
                     elif event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                             self.currSprite.state = False
