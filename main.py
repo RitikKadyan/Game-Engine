@@ -34,7 +34,7 @@ class Sprite(pygame.sprite.Sprite):
 
     def update(self):
         pygame.draw.rect(self.screen, BLACK,
-                         [self.rect.topleft[0], self.rect.topleft[1], self.rect.bottomright[0] - self.rect.topleft[0],
+                         [self.rect.topleft[0]-2, self.rect.topleft[1], self.rect.bottomright[0] - self.rect.topleft[0],
                           self.rect.bottomright[1] - self.rect.topleft[
                               1]])  # Clear the old sprite from the page without clearing the whole page
         if self.state and self.animated:
@@ -44,7 +44,7 @@ class Sprite(pygame.sprite.Sprite):
 
     def moveRight(self):
         self.state = True
-        self.x += 0.05
+        self.x += 10
         if self.x > self.size-(self.rect.bottomright[0]-self.rect.bottomleft[0]):
             pygame.draw.rect(self.screen, BLACK,
                          [self.rect.topleft[0], self.rect.topleft[1], self.rect.bottomright[0] - self.rect.topleft[0],
@@ -80,13 +80,13 @@ class Scene:
                         pygame.quit()
                         self.keepGoing = False
                     elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_p:
-                            self.pause()
-                        elif event.key == pygame.K_c:
-                            self.clear()
-                        elif event.key == pygame.K_q:
+                        if event.key == pygame.K_q:
                             pygame.quit()
                             self.keepGoing = False
+                        elif event.key == pygame.K_p:
+                            self.pause(2)
+                        elif event.key == pygame.K_c:
+                            self.clear()
                     elif event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                             self.currSprite.state = False
@@ -113,7 +113,7 @@ class Scene:
                         self.keepGoing = False
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_p:
-                            self.pause()
+                            self.pause(1)
                         elif event.key == pygame.K_q:
                             pygame.quit()
                             self.keepGoing = False
@@ -130,8 +130,8 @@ class Scene:
     def end(self):
         self.state = 0
 
-    def pause(self):
-        self.state = not self.state
+    def pause(self, num):
+        self.state = num
 
     def update(self):
         self.sprites.update()
